@@ -1,15 +1,12 @@
 
 import React, { useState, memo } from "react"
 import PropTypes from "prop-types"
+import Svg, { G, Path }  from "react-native-svg"
 
 const Geography = ({
   geography,
-  onMouseEnter,
-  onMouseLeave,
-  onMouseDown,
-  onMouseUp,
-  onFocus,
-  onBlur,
+  onPressIn,
+  onPressOut,
   style = {},
   className = "",
   ...restProps
@@ -19,47 +16,22 @@ const Geography = ({
 
   function handleMouseEnter(evt) {
     setFocus(true)
-    if (onMouseEnter) onMouseEnter(evt)
+    if (onPressIn) onPressIn(evt, geography)
   }
 
   function handleMouseLeave(evt) {
     setFocus(false)
     if (isPressed) setPressed(false)
-    if (onMouseLeave) onMouseLeave(evt)
-  }
-
-  function handleFocus(evt) {
-    setFocus(true)
-    if (onFocus) onFocus(evt)
-  }
-
-  function handleBlur(evt) {
-    setFocus(false)
-    if (isPressed) setPressed(false)
-    if (onBlur) onBlur(evt)
-  }
-
-  function handleMouseDown(evt) {
-    setPressed(true)
-    if (onMouseDown) onMouseDown(evt)
-  }
-
-  function handleMouseUp(evt) {
-    setPressed(false)
-    if (onMouseUp) onMouseUp(evt)
+    if (onPressOut) onPressOut(evt, geography)
   }
 
   return (
-    <path
+    <Path
       tabIndex="0"
       className={`rsm-geography ${className}`}
       d={geography.svgPath}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      onFocus={handleFocus}
-      onBlur={handleBlur}
-      onMouseDown={handleMouseDown}
-      onMouseUp={handleMouseUp}
+      onPressIn={handleMouseEnter}
+      onPressOut={handleMouseLeave}
       style={style[isPressed || isFocused ? (isPressed ? "pressed" : "hover") : "default"]}
       {...restProps}
     />
@@ -68,8 +40,8 @@ const Geography = ({
 
 Geography.propTypes = {
   geography: PropTypes.object,
-  onMouseEnter: PropTypes.func,
-  onMouseLeave: PropTypes.func,
+  onPressIn: PropTypes.func,
+  onPressOut: PropTypes.func,
   onMouseDown: PropTypes.func,
   onMouseUp: PropTypes.func,
   onFocus: PropTypes.func,

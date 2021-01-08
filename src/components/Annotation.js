@@ -1,6 +1,7 @@
 
 import React, { useContext } from "react"
 import PropTypes from "prop-types"
+import { G, Path }  from "react-native-svg"
 
 import { MapContext } from "./MapProvider"
 import { createConnectorPath } from "../utils"
@@ -20,14 +21,14 @@ const Annotation = ({
   const connectorPath = createConnectorPath(dx, dy, curve)
 
   return (
-    <g
+    <G
       transform={`translate(${x + dx}, ${y + dy})`}
       className={`rsm-annotation ${className}`}
       {...restProps}
     >
-      <path d={connectorPath} fill="transparent" stroke="#000" {...connectorProps} />
+      <Path d={connectorPath} fill="transparent" stroke="#000" {...connectorProps} />
       {children}
-    </g>
+    </G>
   )
 }
 

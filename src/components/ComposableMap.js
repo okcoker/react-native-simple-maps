@@ -1,6 +1,7 @@
 
 import React from "react"
 import PropTypes from "prop-types"
+import Svg from "react-native-svg"
 
 import { MapProvider } from "./MapProvider"
 
@@ -19,7 +20,7 @@ const ComposableMap = ({
       projection={projection}
       projectionConfig={projectionConfig}
     >
-      <svg
+      <Svg
         viewBox={`0 0 ${width} ${height}`}
         className={`rsm-svg ${className}`}
         {...restProps}

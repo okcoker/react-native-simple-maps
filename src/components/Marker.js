@@ -1,18 +1,15 @@
 
 import React, { useContext, useState } from "react"
 import PropTypes from "prop-types"
+import Svg, { G, Path }  from "react-native-svg"
 
 import { MapContext } from "./MapProvider"
 
 const Marker = ({
   coordinates,
   children,
-  onMouseEnter,
-  onMouseLeave,
-  onMouseDown,
-  onMouseUp,
-  onFocus,
-  onBlur,
+  onPressIn,
+  onPressOut,
   style = {},
   className = "",
   ...restProps
@@ -25,51 +22,26 @@ const Marker = ({
 
   function handleMouseEnter(evt) {
     setFocus(true)
-    if (onMouseEnter) onMouseEnter(evt)
+    if (onPressIn) onPressIn(evt, coordinates)
   }
 
   function handleMouseLeave(evt) {
     setFocus(false)
     if (isPressed) setPressed(false)
-    if (onMouseLeave) onMouseLeave(evt)
-  }
-
-  function handleFocus(evt) {
-    setFocus(true)
-    if (onFocus) onFocus(evt)
-  }
-
-  function handleBlur(evt) {
-    setFocus(false)
-    if (isPressed) setPressed(false)
-    if (onBlur) onBlur(evt)
-  }
-
-  function handleMouseDown(evt) {
-    setPressed(true)
-    if (onMouseDown) onMouseDown(evt)
-  }
-
-  function handleMouseUp(evt) {
-    setPressed(false)
-    if (onMouseUp) onMouseUp(evt)
+    if (onPressOut) onPressOut(evt, coordinates)
   }
 
   return (
-    <g
+    <G
       transform={`translate(${x}, ${y})`}
       className={`rsm-marker ${className}`}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      onFocus={handleFocus}
-      onBlur={handleBlur}
-      onMouseDown={handleMouseDown}
-      onMouseUp={handleMouseUp}
+      onPressIn={handleMouseEnter}
+      onPressOut={handleMouseLeave}
       style={style[isPressed || isFocused ? (isPressed ? "pressed" : "hover") : "default"]}
       {...restProps}
     >
       {children}
-    </g>
+    </G>
   )
 }
 
@@ -79,8 +51,8 @@ Marker.propTypes = {
     PropTypes.node,
     PropTypes.arrayOf(PropTypes.node),
   ]),
-  onMouseEnter: PropTypes.func,
-  onMouseLeave: PropTypes.func,
+  onPressIn: PropTypes.func,
+  onPressOut: PropTypes.func,
   onMouseDown: PropTypes.func,
   onMouseUp: PropTypes.func,
   onFocus: PropTypes.func,
