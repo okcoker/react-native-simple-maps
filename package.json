@@ -55,7 +55,7 @@
     "react": "^16.8.0 || 17.x",
     "react-dom": "^16.8.0 || 17.x",
     "prop-types": "^15.7.2",
-    "react-native-svg": "9.13.3"
+    "react-native-svg": "^12.1.0"
   },
   "dependencies": {
     "d3-geo": "^2.0.1",
